@@ -1,9 +1,10 @@
 //---------------------------->Global Variables<-------------------
+
 const arrayOfCells = document.querySelectorAll(".cell")
 const gameBoard = document.getElementById("board")
 const arrayOfPockets = document.querySelectorAll(".pocket")
 const arrayOfStores = document.querySelectorAll(".store")
-let isPlayerATurn = false
+let isPlayerATurn = true
 let gameOver = false
 
 
@@ -12,6 +13,7 @@ let gameOver = false
 //set value = 0 and iterate over array, decrementing value by 1 while current != 0
 function moveMarbles(targetCell) {
     let currentValue = targetCell.dataset.value
+    let lastPlaced;
 
     for (let i = (+targetCell.id + 1); i < arrayOfCells.length; i++) {
         const idSelect = document.getElementById(i)
@@ -22,6 +24,12 @@ function moveMarbles(targetCell) {
         idSelect.dataset.value = +idSelect.dataset.value + 1;
         idSelect.innerText = idSelect.dataset.value;
         currentValue--;
+
+        //set last elemen to a variable and check if its a store
+        lastPlaced = idSelect;
+        console.log(lastPlaced)
+
+        //break out if no more marbles to give
         if (currentValue <= 0) break;
     }
 
@@ -36,6 +44,8 @@ function moveMarbles(targetCell) {
             idSelect.dataset.value = +idSelect.dataset.value + 1;
             idSelect.innerText = idSelect.dataset.value;
             currentValue--;
+
+            lastPlaced = idSelect;
             if (currentValue <= 0) break;
         }
     }
@@ -46,6 +56,16 @@ function moveMarbles(targetCell) {
     targetCell.innerText = currentValue;
 
     checkWin();
+    updateTurn(lastPlaced);
+}
+
+//go again if last placed marble was in store otherwise swap turns
+function updateTurn(cell) {
+    if (cell === arrayOfStores[0] || cell === arrayOfStores[1]) {
+        return;
+    } else {
+        isPlayerATurn = !isPlayerATurn
+    }
 }
 
 //checkWin iterate over array of pockets checking if empty if all empty gameOver=true
@@ -56,7 +76,7 @@ function checkWin() {
         return element.dataset.value === "0"
     })
 
-    
+
     //create new array of pockets player A and test whether they're all empty
     const playerAPockets = pockets.filter(elem => {
         return elem.dataset.player === "a"
@@ -64,7 +84,7 @@ function checkWin() {
     let isAEmpty = playerAPockets.every(elem => {
         return elem.dataset.value === "0"
     })
-    
+
     //create new array of pockets player B and test whether they're empty
     const playerBPockets = pockets.filter(elem => {
         return elem.dataset.player === "b"
@@ -112,23 +132,20 @@ function checkWin() {
     }
 }
 
-
-//skip turn functions
-// function skipTurn()
-
 //handle click function
 function handleClick(e) {
     const value = e.target.dataset.value
     if (value <= 0) return;
 
-    //allows player to interact with their stores only during their turn
+    //allows player to interact with their pockets only during their turn
     if (isPlayerATurn && e.target.dataset.player === "a") {
         moveMarbles(e.target)
-    } else if (!isPlayerATurn && e.target.dataset.player === "b"){
+    } else if (!isPlayerATurn && e.target.dataset.player === "b") {
         moveMarbles(e.target)
     }
 }
 
+//init the values for each cell to standard game
 function initGame() {
     arrayOfPockets.forEach(element => {
         element.dataset.value = 4

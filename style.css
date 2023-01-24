@@ -56,3 +56,8 @@ body {
 #playera {
     grid-column: 1 / span 2;
 }
+
+div {
+    font-size: 30px;
+    font-weight: bold;
+}
