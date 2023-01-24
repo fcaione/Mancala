@@ -25,6 +25,7 @@ body {
     flex-wrap: wrap;
     justify-content: space-around;
     align-content: space-around;
+    /*min + max width*/
 }
 
 .section3 {
