@@ -3,6 +3,7 @@ const arrayOfCells = document.querySelectorAll(".cell")
 const gameBoard = document.getElementById("board")
 const arrayOfPockets = document.querySelectorAll(".pocket")
 const arrayOfStores = document.querySelectorAll(".store")
+isPlayerATurn = true
 
 
 //---------------------------->Functions<-------------------
@@ -19,8 +20,7 @@ function moveMarbles(targetCell) {
         if (currentValue <= 0) break;
     }
 
-    
-    while (currentValue !== 0) {
+    while (currentValue > 0) {
         for (let i = 0; i < arrayOfCells.length; i++) {
             const idSelect = document.getElementById(i)
             idSelect.dataset.value = +idSelect.dataset.value + 1;
@@ -30,7 +30,7 @@ function moveMarbles(targetCell) {
         }
     }
 
-// setting dataset value of current cell = 0
+// setting dataset value of current cell to 0
     currentValue = 0;
     targetCell.dataset.value = currentValue;
     targetCell.innerText = currentValue;
@@ -47,7 +47,14 @@ function checkWin() {
 function handleClick(e) {
     const value = e.target.dataset.value
     if (value <= 0) return;
-    moveMarbles(e.target)
+
+    //allows player to interact with their stores only during their turn
+    if (isPlayerATurn && e.target.dataset.player === "a") {
+        moveMarbles(e.target)
+    } else if (!isPlayerATurn && e.target.dataset.player === "b"){
+        moveMarbles(e.target)
+    }
+
 }
 
 function initGame() {
@@ -55,11 +62,11 @@ function initGame() {
         element.dataset.value = 6
         element.innerText = "6"
     })
+
     arrayOfStores.forEach(element => {
         element.dataset.value = 0
         element.innerText = "0"
     })
-
 }
 
 
