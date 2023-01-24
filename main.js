@@ -5,7 +5,7 @@ const arrayOfPockets = document.querySelectorAll(".pocket")
 const arrayOfStores = document.querySelectorAll(".store")
 
 
-//---------------------------->Functions<---------------------------------------
+//---------------------------->Functions<-------------------
 
 //set value = 0 and iterate over array, decrementing value by 1 while current != 0
 function moveMarbles(targetCell) {
@@ -19,7 +19,8 @@ function moveMarbles(targetCell) {
         if (currentValue <= 0) break;
     }
 
-    if (currentValue !== 0) {
+    
+    while (currentValue !== 0) {
         for (let i = 0; i < arrayOfCells.length; i++) {
             const idSelect = document.getElementById(i)
             idSelect.dataset.value = +idSelect.dataset.value + 1;
@@ -29,6 +30,7 @@ function moveMarbles(targetCell) {
         }
     }
 
+// setting dataset value of current cell = 0
     currentValue = 0;
     targetCell.dataset.value = currentValue;
     targetCell.innerText = currentValue;
@@ -61,8 +63,10 @@ function initGame() {
 }
 
 
-//event listeners
+//---------------------------->Event Listeners<-------------------
+
 gameBoard.addEventListener("click", handleClick)
 
-//function called
+//---------------------------->INITGAMEFUNCTION<--------------------
+
 initGame();
