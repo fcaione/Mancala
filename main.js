@@ -53,6 +53,7 @@ function moveMarbles(targetCell) {
     targetCell.dataset.value = currentValue;
     targetCell.innerText = currentValue;
 
+    addImageClasses();
     checkWin();
     findMirrorCell(lastPlaced);
     updateTurn(lastPlaced);
@@ -186,25 +187,31 @@ function addImageClasses() {
     arrayOfCells.forEach(elem => {
         switch (elem.dataset.value) {
             case "0":
-                //remove images
+                elem.classList.remove(elem.classList[2])
+                elem.classList.add("empty")
                 break;
             case "1":
+                elem.classList.replace(elem.classList[2], "marble1")
                 break;
             case "2":
+                elem.classList.replace(elem.classList[2], "marble2")
                 break;
             case "3":
+                elem.classList.replace(elem.classList[2], "marble3")
                 break;
             case "4":
+                elem.classList.remove(elem.classList[2])
                 elem.classList.add("marble4")
                 break;
             case "5":
+                elem.classList.replace(elem.classList[2], "marble5")
                 break;
             case "6":
-                elem.classList.add("marble6")
+                elem.classList.replace(elem.classList[2], "marble6")
                 break;
             default:
-                elem.classList.add("marble6")
-
+                elem.classList.replace(elem.classList[2], "marble6")
+                break;
         }
     })
 }
