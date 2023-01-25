@@ -4,9 +4,9 @@ const arrayOfCells = document.querySelectorAll(".cell")
 const gameBoard = document.getElementById("board")
 const arrayOfPockets = document.querySelectorAll(".pocket")
 const arrayOfStores = document.querySelectorAll(".store")
+const playersTurnText = document.getElementById("player-turn")
 let isPlayerATurn = true
 let gameOver = false
-
 //---------------------------->Functions<-------------------
 
 //set value = 0 and iterate over array, decrementing value by 1 while current != 0
@@ -69,6 +69,7 @@ function updateTurn(cell) {
     } else {
         isPlayerATurn = !isPlayerATurn
     }
+    updateTurnText();
 }
 
 //if data value of last placed = 1, capture pieces on other side
@@ -225,6 +226,15 @@ function initGame() {
         element.innerText = "0"
     })
     addImageClasses();
+    updateTurnText();
+}
+
+function updateTurnText() {
+    if (isPlayerATurn) {
+        playersTurnText.innerHTML = "<h4>Player 1 is going!</h4>"
+    } else {
+        playersTurnText.innerHTML = "<h4>Player 2 is going!</h4>"
+    }
 }
 
 function addImageClasses() {
