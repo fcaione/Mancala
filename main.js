@@ -53,9 +53,12 @@ function moveMarbles(targetCell) {
     targetCell.dataset.value = currentValue;
     targetCell.innerText = currentValue;
 
-    addImageClasses();
     checkWin();
-    findMirrorCell(lastPlaced);
+    let capturableCell = findMirrorCell(lastPlaced)
+    if (capturableCell) {
+        captureMarbles(capturableCell);
+    }
+    addImageClasses();
     updateTurn(lastPlaced);
 }
 
@@ -70,28 +73,55 @@ function updateTurn(cell) {
 
 //if data value of last placed = 1, capture pieces on other side
 function findMirrorCell(cell) {
-    console.log(cell)
     if (cell.dataset.value === "1") {
         if (isPlayerATurn){
             switch (cell.id) {
                 case "0":
-                    console.log("12") //call a function, captureMarbles to grab those marbles
-                    break;
+                    return "12";
                 case "1":
-                    break;
+                    return "11";
                 case "2":
-                    break;
+                    return "10";
                 case "3":
-                    break;
+                    return "9"
                 case "4":
-                    break;
+                    return "8"
                 case "5":
-                    console.log("5")
-                    break;
+                    return "7";
+            }
+        } else {
+            switch(cell.id) {
+                case "7":
+                return "5"
+                case "8":
+                    return "4"
+                case "9":
+                    return "3"
+                case "10":
+                    return "2"
+                case "11":
+                    return "1"
+                case "12":
+                    return "0"
             }
         }
     }
 }
+
+function captureMarbles(capturedCellId) {
+    const capturedCell = document.getElementById(capturedCellId)
+    if (capturedCell.dataset.player === "a") {
+        document.getElementById("13").dataset.value = +capturedCell.dataset.value + 1;
+        document.getElementById("13").innerText = document.getElementById("13").dataset.value
+    } else {
+        document.getElementById("6").dataset.value = +capturedCell.dataset.value + 1;
+        document.getElementById("6").innerText = document.getElementById("6").dataset.value
+        console.log("captured")
+        capturedCell.dataset.value = 0;
+        capturedCell.innerText = capturedCell.dataset.value
+    }
+}
+
 
 //checkWin iterate over array of pockets checking if empty if all empty gameOver=true
 function checkWin() {
