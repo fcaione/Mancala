@@ -54,13 +54,11 @@ function moveMarbles(targetCell) {
     targetCell.innerText = currentValue;
 
     let capturableCell = findMirrorCell(lastPlaced)
-    console.log(capturableCell)
 
     //only if a capturable cell is returned from findMirrorCell
     if (document.getElementById(capturableCell)) {
         captureMarbles(capturableCell, lastPlaced);
     }
-    checkWin();
     addImageClasses();
     updateTurn(lastPlaced);
 }
@@ -114,7 +112,6 @@ function findMirrorCell(cell) {
 
 function captureMarbles(capturedCellId, currentCell) {
     const capturedCell = document.getElementById(capturedCellId)
-    console.log(capturedCell)
     if (capturedCell.dataset.player === "a" && +capturedCell.dataset.value > 0) {
         document.getElementById("13").dataset.value = +document.getElementById("13").dataset.value + +capturedCell.dataset.value + +currentCell.dataset.value;
         document.getElementById("13").innerText = document.getElementById("13").dataset.value
@@ -128,7 +125,6 @@ function captureMarbles(capturedCellId, currentCell) {
         currentCell.innerText = currentCell.dataset.value
 
     } else if (capturedCell.dataset.player === "b" && +(capturedCell.dataset.value) > 0){
-        console.log("capture!")
         document.getElementById("6").dataset.value = +document.getElementById("6").dataset.value + +capturedCell.dataset.value + +currentCell.dataset.value;
         document.getElementById("6").innerText = document.getElementById("6").dataset.value
 
@@ -176,8 +172,6 @@ function checkWin() {
         }, 0)
         const bStore = document.getElementById("13")
         let value = +bStore.dataset.value
-        console.log(value)
-        console.log(sum)
         value += sum;
         bStore.innerText = value;
 
@@ -186,6 +180,7 @@ function checkWin() {
             elem.dataset.value = 0
             elem.innerText = 0
         })
+
     } else if (!isPlayerATurn && isBEmpty) {
         gameOver = true
         const sum = playerAPockets.reduce((acc, elem) => {
@@ -193,8 +188,6 @@ function checkWin() {
         }, 0)
         const aStore = document.getElementById("6")
         let value = +aStore.dataset.value
-        console.log(value)
-        console.log(sum)
         value += sum;
         aStore.innerText = value;
 
@@ -203,6 +196,29 @@ function checkWin() {
             elem.dataset.value = 0
             elem.innerText = 0
         })
+    }
+
+    addImageClasses();
+
+    if (gameOver) {
+        endGame();
+    }
+}
+
+function endGame() {
+    const playerBStore = document.getElementById("13")
+    const playerAStore = document.getElementById("6")
+
+    if (+playerAStore.dataset.value > +playerBStore.dataset.value) {
+        playersTurnText.innerHTML = "<h4>Player 1 wins</h4>"
+        console.log(playerAStore.dataset.value)
+        console.log(playerBStore.dataset.value)
+    } else if (+playerBStore.dataset.value > +playerAStore.dataset.value) {
+        playersTurnText.innerHTML = "<h4>Player 2 wins</h4>"
+        console.log(playerAStore.dataset.value)
+        console.log(playerBStore.dataset.value)
+    } else {
+        playersTurnText.innerHTML = "<h4>It's a tie!</h4>"
     }
 }
 
@@ -217,6 +233,8 @@ function handleClick(e) {
     } else if (!isPlayerATurn && e.target.dataset.player === "b") {
         moveMarbles(e.target)
     }
+
+    checkWin();
 }
 
 //init the values for each cell to standard game
