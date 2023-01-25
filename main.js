@@ -7,7 +7,6 @@ const arrayOfStores = document.querySelectorAll(".store")
 let isPlayerATurn = true
 let gameOver = false
 
-
 //---------------------------->Functions<-------------------
 
 //set value = 0 and iterate over array, decrementing value by 1 while current != 0
@@ -27,7 +26,6 @@ function moveMarbles(targetCell) {
 
         //set last elemen to a variable and check if its a store
         lastPlaced = idSelect;
-        console.log(lastPlaced)
 
         //break out if no more marbles to give
         if (currentValue <= 0) break;
@@ -56,6 +54,7 @@ function moveMarbles(targetCell) {
     targetCell.innerText = currentValue;
 
     checkWin();
+    findMirrorCell(lastPlaced);
     updateTurn(lastPlaced);
 }
 
@@ -68,6 +67,31 @@ function updateTurn(cell) {
     }
 }
 
+//if data value of last placed = 1, capture pieces on other side
+function findMirrorCell(cell) {
+    console.log(cell)
+    if (cell.dataset.value === "1") {
+        if (isPlayerATurn){
+            switch (cell.id) {
+                case "0":
+                    console.log("12") //call a function, captureMarbles to grab those marbles
+                    break;
+                case "1":
+                    break;
+                case "2":
+                    break;
+                case "3":
+                    break;
+                case "4":
+                    break;
+                case "5":
+                    console.log("5")
+                    break;
+            }
+        }
+    }
+}
+
 //checkWin iterate over array of pockets checking if empty if all empty gameOver=true
 function checkWin() {
     const pockets = Array.from(arrayOfPockets)
@@ -75,7 +99,6 @@ function checkWin() {
     gameOver = pockets.every(element => {
         return element.dataset.value === "0"
     })
-
 
     //create new array of pockets player A and test whether they're all empty
     const playerAPockets = pockets.filter(elem => {
@@ -156,8 +179,35 @@ function initGame() {
         element.dataset.value = 0
         element.innerText = "0"
     })
+    addImageClasses();
 }
 
+function addImageClasses() {
+    arrayOfCells.forEach(elem => {
+        switch (elem.dataset.value) {
+            case "0":
+                //remove images
+                break;
+            case "1":
+                break;
+            case "2":
+                break;
+            case "3":
+                break;
+            case "4":
+                elem.classList.add("marble4")
+                break;
+            case "5":
+                break;
+            case "6":
+                elem.classList.add("marble6")
+                break;
+            default:
+                elem.classList.add("marble6")
+
+        }
+    })
+}
 
 //---------------------------->Event Listeners<-------------------
 

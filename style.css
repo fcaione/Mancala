@@ -61,3 +61,40 @@ div {
     font-size: 30px;
     font-weight: bold;
 }
+
+.marble1{
+    background-image: url(./images/marble1.png);
+    background-size: 60px 60px;
+    background-repeat: no-repeat;
+    background-position: center;;
+}
+.marble2{
+    background-image: url(./images/marble2.png);
+    background-size: 60px 60px;
+    background-repeat: no-repeat;
+    background-position: center;;
+}
+.marble3{
+    background-image: url(./images/marble3.png);
+    background-size: 60px 60px;
+    background-repeat: no-repeat;
+    background-position: center;;
+}
+.marble4{
+    background-image: url(./images/marble4.png);
+    background-size: 60px 60px;
+    background-repeat: no-repeat;
+    background-position: center;;
+}
+.marble5{
+    background-image: url(./images/marble5.png);
+    background-size: 60px 60px;
+    background-repeat: no-repeat;
+    background-position: center;;
+}
+.marble6{
+    background-image: url(./images/marble6.png);
+    background-size: 60px 60px;
+    background-repeat: no-repeat;
+    background-position: center;;
+}
