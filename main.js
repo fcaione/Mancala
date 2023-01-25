@@ -5,7 +5,7 @@ const gameBoard = document.getElementById("board")
 const arrayOfPockets = document.querySelectorAll(".pocket")
 const arrayOfStores = document.querySelectorAll(".store")
 const playersTurnText = document.getElementById("player-turn")
-let isPlayerATurn = true
+let isPlayerATurn = false
 let gameOver = false
 //---------------------------->Functions<-------------------
 
@@ -60,11 +60,13 @@ function moveMarbles(targetCell) {
         captureMarbles(capturableCell, lastPlaced);
     }
     addImageClasses();
+    checkWin(); // has to be before update turn
     updateTurn(lastPlaced);
 }
 
 //go again if last placed marble was in store otherwise swap turns
 function updateTurn(cell) {
+    if (gameOver === true) return;
     if (cell === arrayOfStores[0] || cell === arrayOfStores[1]) {
         return;
     } else {
@@ -171,8 +173,10 @@ function checkWin() {
             return acc += (+elem.dataset.value);
         }, 0)
         const bStore = document.getElementById("13")
+
         let value = +bStore.dataset.value
         value += sum;
+        bStore.dataset.value = value
         bStore.innerText = value;
 
         //set all pockets = 0
@@ -189,6 +193,7 @@ function checkWin() {
         const aStore = document.getElementById("6")
         let value = +aStore.dataset.value
         value += sum;
+        aStore.dataset.value = value
         aStore.innerText = value;
 
         //set all pockets to 0
@@ -211,12 +216,8 @@ function endGame() {
 
     if (+playerAStore.dataset.value > +playerBStore.dataset.value) {
         playersTurnText.innerHTML = "<h4>Player 1 wins</h4>"
-        console.log(playerAStore.dataset.value)
-        console.log(playerBStore.dataset.value)
     } else if (+playerBStore.dataset.value > +playerAStore.dataset.value) {
         playersTurnText.innerHTML = "<h4>Player 2 wins</h4>"
-        console.log(playerAStore.dataset.value)
-        console.log(playerBStore.dataset.value)
     } else {
         playersTurnText.innerHTML = "<h4>It's a tie!</h4>"
     }
@@ -233,8 +234,6 @@ function handleClick(e) {
     } else if (!isPlayerATurn && e.target.dataset.player === "b") {
         moveMarbles(e.target)
     }
-
-    checkWin();
 }
 
 //init the values for each cell to standard game
