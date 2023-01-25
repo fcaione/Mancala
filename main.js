@@ -54,12 +54,15 @@ function moveMarbles(targetCell) {
     targetCell.innerText = currentValue;
 
     let capturableCell = findMirrorCell(lastPlaced)
-    if (capturableCell) {
+    console.log(capturableCell)
+
+    //only if a capturable cell is returned from findMirrorCell
+    if (document.getElementById(capturableCell)) {
         captureMarbles(capturableCell, lastPlaced);
     }
+    checkWin();
     addImageClasses();
     updateTurn(lastPlaced);
-    checkWin();
 }
 
 //go again if last placed marble was in store otherwise swap turns
@@ -111,7 +114,8 @@ function findMirrorCell(cell) {
 
 function captureMarbles(capturedCellId, currentCell) {
     const capturedCell = document.getElementById(capturedCellId)
-    if (capturedCell.dataset.player === "a") {
+    console.log(capturedCell)
+    if (capturedCell.dataset.player === "a" && +capturedCell.dataset.value > 0) {
         document.getElementById("13").dataset.value = +document.getElementById("13").dataset.value + +capturedCell.dataset.value + +currentCell.dataset.value;
         document.getElementById("13").innerText = document.getElementById("13").dataset.value
 
@@ -123,7 +127,8 @@ function captureMarbles(capturedCellId, currentCell) {
         currentCell.dataset.value = 0
         currentCell.innerText = currentCell.dataset.value
 
-    } else {
+    } else if (capturedCell.dataset.player === "b" && +(capturedCell.dataset.value) > 0){
+        console.log("capture!")
         document.getElementById("6").dataset.value = +document.getElementById("6").dataset.value + +capturedCell.dataset.value + +currentCell.dataset.value;
         document.getElementById("6").innerText = document.getElementById("6").dataset.value
 
