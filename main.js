@@ -53,13 +53,13 @@ function moveMarbles(targetCell) {
     targetCell.dataset.value = currentValue;
     targetCell.innerText = currentValue;
 
-    checkWin();
     let capturableCell = findMirrorCell(lastPlaced)
     if (capturableCell) {
-        captureMarbles(capturableCell);
+        captureMarbles(capturableCell, lastPlaced);
     }
     addImageClasses();
     updateTurn(lastPlaced);
+    checkWin();
 }
 
 //go again if last placed marble was in store otherwise swap turns
@@ -108,17 +108,31 @@ function findMirrorCell(cell) {
     }
 }
 
-function captureMarbles(capturedCellId) {
+function captureMarbles(capturedCellId, currentCell) {
     const capturedCell = document.getElementById(capturedCellId)
     if (capturedCell.dataset.player === "a") {
-        document.getElementById("13").dataset.value = +capturedCell.dataset.value + 1;
+        document.getElementById("13").dataset.value = +document.getElementById("13").dataset.value + +capturedCell.dataset.value + +currentCell.dataset.value;
         document.getElementById("13").innerText = document.getElementById("13").dataset.value
-    } else {
-        document.getElementById("6").dataset.value = +capturedCell.dataset.value + 1;
-        document.getElementById("6").innerText = document.getElementById("6").dataset.value
-        console.log("captured")
+
+        //updating captured cell to 0
         capturedCell.dataset.value = 0;
         capturedCell.innerText = capturedCell.dataset.value
+
+        //updating current tile to 0
+        currentCell.dataset.value = 0
+        currentCell.innerText = currentCell.dataset.value
+
+    } else {
+        document.getElementById("6").dataset.value = +document.getElementById("6").dataset.value + +capturedCell.dataset.value + +currentCell.dataset.value;
+        document.getElementById("6").innerText = document.getElementById("6").dataset.value
+
+        //updating captured cell to 0
+        capturedCell.dataset.value = 0;
+        capturedCell.innerText = capturedCell.dataset.value
+
+        //updating current cell to 0
+        currentCell.dataset.value = 0
+        currentCell.innerText = currentCell.dataset.value
     }
 }
 
@@ -248,7 +262,9 @@ function addImageClasses() {
 
 //---------------------------->Event Listeners<-------------------
 
-gameBoard.addEventListener("click", handleClick)
+arrayOfCells.forEach(elem => {
+    elem.addEventListener("click", handleClick)
+})
 
 //---------------------------->INITGAMEFUNCTION<--------------------
 
