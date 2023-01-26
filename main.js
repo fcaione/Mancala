@@ -73,6 +73,8 @@ function updateTurn(cell) {
     } else {
         isPlayerATurn = !isPlayerATurn
     }
+
+    
     updateTurnText();
 }
 
