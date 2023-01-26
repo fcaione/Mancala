@@ -11,6 +11,18 @@ let isPlayerATurn = false
 let gameOver = false
 
 //---------------------------->Functions<-------------------
+//handle click function
+function handleClick(e) {
+    const value = e.target.dataset.value
+    if (value <= 0) return;
+
+    //allows player to interact with their pockets only during their turn
+    if (isPlayerATurn && e.target.dataset.player === "a") {
+        moveMarbles(e.target)
+    } else if (!isPlayerATurn && e.target.dataset.player === "b") {
+        moveMarbles(e.target)
+    }
+}
 
 //set value = 0 and iterate over array, decrementing value by 1 while current != 0
 function moveMarbles(targetCell) {
@@ -68,49 +80,6 @@ function moveMarbles(targetCell) {
     updateTurn(lastPlaced);
 }
 
-//go again if last placed marble was in store otherwise swap turns
-function updateTurn(cell) {
-    if (gameOver === true) return;
-    if (cell === arrayOfStores[0] || cell === arrayOfStores[1]) {
-        return;
-    } else {
-        isPlayerATurn = !isPlayerATurn
-    }
-
-    if (isPlayerATurn) {
-        playersTurnText.innerHTML = "<h2>Player 1's turn!</h2>"
-    } else {
-        playersTurnText.innerHTML = "<h2>Player 2's turn!</h2>"
-    }
-    toggleClassClickable();
-}
-
-function toggleClassClickable() {
-    const playerAPockets = pockets.filter(elem => {
-        return elem.dataset.player === "a"
-    })
-    const playerBPockets = pockets.filter(elem => {
-        return elem.dataset.player === "b"
-    })
-
-    if (isPlayerATurn) {
-        playerAPockets.forEach(elem => {
-            elem.classList.toggle("clickable")
-        })
-        playerBPockets.forEach(elem => {
-            elem.classList.remove("clickable")
-        })
-    } else {
-        playerBPockets.forEach(elem => {
-            elem.classList.toggle("clickable")
-        })
-        playerAPockets.forEach(elem => {
-            elem.classList.remove("clickable")
-        })
-    }
-}
-
-//if data value of last placed = 1, capture pieces on other side
 function findMirrorCell(cell) {
     if (cell.dataset.value === "1") {
         if (isPlayerATurn){
@@ -147,6 +116,7 @@ function findMirrorCell(cell) {
     }
 }
 
+//if data value of last placed = 1, capture pieces on other side
 function captureMarbles(capturedCellId, currentCell) {
     const capturedCell = document.getElementById(capturedCellId)
     if (capturedCell.dataset.player === "a" && +capturedCell.dataset.value > 0) {
@@ -174,7 +144,6 @@ function captureMarbles(capturedCellId, currentCell) {
         currentCell.innerText = currentCell.dataset.value
     }
 }
-
 
 //checkWin iterate over array of pockets checking if empty if all empty gameOver=true
 function checkWin() {
@@ -226,55 +195,6 @@ function checkWin() {
     if (gameOver) endGame();
 }
 
-function endGame() {
-    const playerBStore = document.getElementById("13")
-    const playerAStore = document.getElementById("6")
-
-    if (+playerAStore.dataset.value > +playerBStore.dataset.value) {
-        playersTurnText.innerHTML = "<h2>Player 1 wins</h2>"
-    } else if (+playerBStore.dataset.value > +playerAStore.dataset.value) {
-        playersTurnText.innerHTML = "<h2>Player 2 wins</h2>"
-    } else {
-        playersTurnText.innerHTML = "<h2>It's a tie!</h2>"
-    }
-
-    pockets.forEach(elem => {
-        elem.classList.remove("clickable")
-    })
-}
-
-//handle click function
-function handleClick(e) {
-    const value = e.target.dataset.value
-    if (value <= 0) return;
-
-    //allows player to interact with their pockets only during their turn
-    if (isPlayerATurn && e.target.dataset.player === "a") {
-        moveMarbles(e.target)
-    } else if (!isPlayerATurn && e.target.dataset.player === "b") {
-        moveMarbles(e.target)
-    }
-}
-
-//init the values for each cell to standard game
-function initGame() {
-    gameOver = false
-
-    arrayOfPockets.forEach(element => {
-        element.dataset.value = 4
-        element.innerText = "4"
-        element.classList.remove("clickable")
-    })
-
-    arrayOfStores.forEach(element => {
-        element.dataset.value = 0
-        element.innerText = "0"
-    })
-    updateImageClasses();
-    updateTurn();
-}
-
-
 function updateImageClasses() {
     arrayOfCells.forEach(elem => {
         elem.classList.remove("empty", "marble1", "marble2", "marble3", "marble4", "marble5", "marble6")
@@ -307,6 +227,82 @@ function updateImageClasses() {
     })
 }
 
+//go again if last placed marble was in store otherwise swap turns
+function updateTurn(cell) {
+    if (gameOver === true) return;
+    if (cell === arrayOfStores[0] || cell === arrayOfStores[1]) {
+        return;
+    } else {
+        isPlayerATurn = !isPlayerATurn
+    }
+
+    if (isPlayerATurn) {
+        playersTurnText.innerHTML = "<h2>Player 1's turn!</h2>"
+    } else {
+        playersTurnText.innerHTML = "<h2>Player 2's turn!</h2>"
+    }
+    toggleClassClickable();
+}
+
+function toggleClassClickable() {
+    const playerAPockets = pockets.filter(elem => {
+        return elem.dataset.player === "a"
+    })
+    const playerBPockets = pockets.filter(elem => {
+        return elem.dataset.player === "b"
+    })
+
+    if (isPlayerATurn) {
+        playerAPockets.forEach(elem => {
+            elem.classList.toggle("clickable")
+        })
+        playerBPockets.forEach(elem => {
+            elem.classList.remove("clickable")
+        })
+    } else {
+        playerBPockets.forEach(elem => {
+            elem.classList.toggle("clickable")
+        })
+        playerAPockets.forEach(elem => {
+            elem.classList.remove("clickable")
+        })
+    }
+}
+
+function endGame() {
+    const playerBStore = document.getElementById("13")
+    const playerAStore = document.getElementById("6")
+
+    if (+playerAStore.dataset.value > +playerBStore.dataset.value) {
+        playersTurnText.innerHTML = "<h2>Player 1 wins</h2>"
+    } else if (+playerBStore.dataset.value > +playerAStore.dataset.value) {
+        playersTurnText.innerHTML = "<h2>Player 2 wins</h2>"
+    } else {
+        playersTurnText.innerHTML = "<h2>It's a tie!</h2>"
+    }
+
+    pockets.forEach(elem => {
+        elem.classList.remove("clickable")
+    })
+}
+
+//init the values for each cell to standard game
+function initGame() {
+    gameOver = false
+
+    arrayOfPockets.forEach(element => {
+        element.dataset.value = 4
+        element.innerText = "4"
+        element.classList.remove("clickable")
+    })
+
+    arrayOfStores.forEach(element => {
+        element.dataset.value = 0
+        element.innerText = "0"
+    })
+    updateImageClasses();
+    updateTurn();
+}
 //---------------------------->Event Listeners<-------------------
 
 arrayOfCells.forEach(elem => {
