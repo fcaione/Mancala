@@ -7,12 +7,6 @@ const arrayOfStores = document.querySelectorAll(".store")
 const playersTurnText = document.getElementById("player-turn")
 const restartButton = document.getElementById("restart-btn")
 const pockets = Array.from(arrayOfPockets)
-const playerAPockets = pockets.filter(elem => {
-    return elem.dataset.player === "a"
-})
-const playerBPockets = pockets.filter(elem => {
-    return elem.dataset.player === "b"
-})
 let isPlayerATurn = true
 let gameOver = false
 
@@ -68,8 +62,9 @@ function moveMarbles(targetCell) {
     if (document.getElementById(capturableCell)) {
         captureMarbles(capturableCell, lastPlaced);
     }
-    addImageClasses();
+
     checkWin(); // has to be before update turn
+    updateImageClasses();
     updateTurn(lastPlaced);
 }
 
@@ -86,6 +81,13 @@ function updateTurn(cell) {
 }
 
 function toggleClassClickable() {
+    const playerAPockets = pockets.filter(elem => {
+        return elem.dataset.player === "a"
+    })
+    const playerBPockets = pockets.filter(elem => {
+        return elem.dataset.player === "b"
+    })
+
     if (isPlayerATurn) {
         playerAPockets.forEach(elem => {
             elem.classList.toggle("clickable")
@@ -171,8 +173,13 @@ function captureMarbles(capturedCellId, currentCell) {
 
 //checkWin iterate over array of pockets checking if empty if all empty gameOver=true
 function checkWin() {
-    gameOver = pockets.every(element => {
-        return element.dataset.value === "0"
+    const pockets = Array.from(arrayOfPockets)
+
+    const playerAPockets = pockets.filter(elem => {
+        return elem.dataset.player === "a"
+    })
+    const playerBPockets = pockets.filter(elem => {
+        return elem.dataset.player === "b"
     })
 
     let isAEmpty = playerAPockets.every(elem => {
@@ -183,48 +190,40 @@ function checkWin() {
     })
 
     //if player a or b turn and all elements data value === 0 game=over
-    if (isPlayerATurn && isAEmpty) {
+    if (isAEmpty || isBEmpty) {
+        console.log(isAEmpty + "a")
+        console.log(isBEmpty + "b")
+        console.log("one is empty")
         gameOver = true
-        //adding all numbers in opposing players pockets to their store
-        const sum = playerBPockets.reduce((acc, elem) => {
+        const bStore = document.getElementById("13")
+        const aStore = document.getElementById("6")
+
+        let sum = playerBPockets.reduce((acc, elem) => {
             return acc += (+elem.dataset.value);
         }, 0)
-        const bStore = document.getElementById("13")
 
-        let value = +bStore.dataset.value
-        value += sum;
-        bStore.dataset.value = value
-        bStore.innerText = value;
+        let currentValue = +bStore.dataset.value
+        currentValue += sum;
+        bStore.dataset.value = currentValue
+        bStore.innerText = currentValue;
+
+        sum = playerAPockets.reduce((acc, elem) => {
+            return acc += (+elem.dataset.value);
+        }, 0)
+
+        currentValue = +aStore.dataset.value
+        currentValue += sum;
+        aStore.dataset.value = currentValue
+        aStore.innerText = currentValue;
 
         //set all pockets = 0
         arrayOfPockets.forEach(elem => {
             elem.dataset.value = 0
             elem.innerText = 0
-        })
-
-    } else if (!isPlayerATurn && isBEmpty) {
-        gameOver = true
-        const sum = playerAPockets.reduce((acc, elem) => {
-            return acc += (+elem.dataset.value);
-        }, 0)
-        const aStore = document.getElementById("6")
-        let value = +aStore.dataset.value
-        value += sum;
-        aStore.dataset.value = value
-        aStore.innerText = value;
-
-        //set all pockets to 0
-        arrayOfPockets.forEach(elem => {
-            elem.dataset.value = 0
-            elem.innerText = 0
-        })
+        })  
     }
 
-    addImageClasses();
-
-    if (gameOver) {
-        endGame();
-    }
+    if (gameOver) endGame();
 }
 
 function endGame() {
@@ -255,6 +254,8 @@ function handleClick(e) {
 
 //init the values for each cell to standard game
 function initGame() {
+    gameOver = false
+
     arrayOfPockets.forEach(element => {
         element.dataset.value = 4
         element.innerText = "4"
@@ -265,7 +266,7 @@ function initGame() {
         element.dataset.value = 0
         element.innerText = "0"
     })
-    addImageClasses();
+    updateImageClasses();
     updateTurnText();
     toggleClassClickable();
 }
@@ -278,34 +279,33 @@ function updateTurnText() {
     }
 }
 
-function addImageClasses() {
+function updateImageClasses() {
+    arrayOfCells.forEach(elem => {
+        elem.classList.remove("empty", "marble1", "marble2", "marble3", "marble4", "marble5", "marble6")
+    })
     arrayOfCells.forEach(elem => {
         switch (elem.dataset.value) {
             case "0":
-                elem.classList.remove(elem.classList[2])
                 elem.classList.add("empty")
                 break;
             case "1":
-                elem.classList.replace(elem.classList[2], "marble1")
+                elem.classList.add("marble1")
                 break;
             case "2":
-                elem.classList.replace(elem.classList[2], "marble2")
+                elem.classList.add("marble2")
                 break;
             case "3":
-                elem.classList.replace(elem.classList[2], "marble3")
+                elem.classList.add("marble3")
                 break;
             case "4":
-                elem.classList.remove(elem.classList[2])
                 elem.classList.add("marble4")
                 break;
             case "5":
-                elem.classList.replace(elem.classList[2], "marble5")
+                elem.classList.add("marble5")
                 break;
             case "6":
-                elem.classList.replace(elem.classList[2], "marble6")
-                break;
             default:
-                elem.classList.replace(elem.classList[2], "marble6")
+                elem.classList.add("marble6")
                 break;
         }
     })
