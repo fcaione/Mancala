@@ -37,4 +37,5 @@
 
 ## ***Credits / Links***
 
-### **Soon to be link marble icons** [Link](http://www.duckduckgo.com)
+### **Rules based off of** [Link](https://endlessgames.com/wp-content/uploads/Mancala_Instructions.pdf)
+### <a href="https://www.flaticon.com/free-icons/marbles" title="marbles icons">Marbles icons created by Freepik - Flaticon</a>

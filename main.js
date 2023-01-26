@@ -6,7 +6,7 @@ const arrayOfPockets = document.querySelectorAll(".pocket")
 const arrayOfStores = document.querySelectorAll(".store")
 const playersTurnText = document.getElementById("player-turn")
 const restartButton = document.getElementById("restart-btn")
-let isPlayerATurn = false
+let isPlayerATurn = true
 let gameOver = false
 //---------------------------->Functions<-------------------
 
