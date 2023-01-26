@@ -37,5 +37,6 @@
 
 ## ***Credits / Links***
 
-### **Rules based off of** [Link](https://endlessgames.com/wp-content/uploads/Mancala_Instructions.pdf)
+### **Rules based off of** [Endlessgames](https://endlessgames.com/wp-content/uploads/Mancala_Instructions.pdf)
 ### <a href="https://www.flaticon.com/free-icons/marbles" title="marbles icons">Marbles icons created by Freepik - Flaticon</a>
+### **Background gif** [geographyofrobots](https://pin.it/1xcknFl)
