@@ -12,10 +12,16 @@ body {
     font-family: fantasy;
 }
 
-h2 {
+h2, h3 {
     font-weight: bolder;
     color: aliceblue;
     background-color: rgba(172,84,84,.7);
+}
+
+h1 {
+    font-weight: bolder;
+    color: aliceblue;
+    background-color: rgba(172,84,84,.7);  
 }
 
 #board {
@@ -23,7 +29,7 @@ h2 {
     width: 700px;
     height: 250px;
     margin: 50px;
-    background-color: #ac5404;
+    background-color: #aa5500;
     border-radius: 50px;
 }
 
@@ -37,7 +43,6 @@ h2 {
     flex-wrap: wrap;
     justify-content: space-around;
     align-content: space-around;
-    /*min + max width*/
 }
 
 .section3 {
@@ -76,13 +81,13 @@ div {
 
 .marble1{
     background-image: url(./images/marble1.png);
-    background-size: 40px 40px;
+    background-size: 25px 25px;
     background-repeat: no-repeat;
     background-position: center;;
 }
 .marble2{
     background-image: url(./images/marble2.png);
-    background-size: 55px 55px;
+    background-size: 45px 45px;
     background-repeat: no-repeat;
     background-position: center;;
 }
