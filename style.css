@@ -5,6 +5,17 @@ body {
     height: 100vh;
     justify-content: center;
     align-items: center;
+    background-image: url(./images/room.gif);
+    background-repeat: no-repeat;
+    background-position:center;
+    background-size: cover;
+    font-family: fantasy;
+}
+
+h2 {
+    font-weight: bolder;
+    color: aliceblue;
+    background-color: rgba(172,84,84,.7);
 }
 
 #board {
@@ -12,7 +23,7 @@ body {
     width: 700px;
     height: 250px;
     margin: 50px;
-    background-color: #C96E00;
+    background-color: #ac5404;
     border-radius: 50px;
 }
 

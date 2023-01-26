@@ -215,11 +215,11 @@ function endGame() {
     const playerAStore = document.getElementById("6")
 
     if (+playerAStore.dataset.value > +playerBStore.dataset.value) {
-        playersTurnText.innerHTML = "<h4>Player 1 wins</h4>"
+        playersTurnText.innerHTML = "<h2>Player 1 wins</h2>"
     } else if (+playerBStore.dataset.value > +playerAStore.dataset.value) {
-        playersTurnText.innerHTML = "<h4>Player 2 wins</h4>"
+        playersTurnText.innerHTML = "<h2>Player 2 wins</h2>"
     } else {
-        playersTurnText.innerHTML = "<h4>It's a tie!</h4>"
+        playersTurnText.innerHTML = "<h2>It's a tie!</h2>"
     }
 }
 
@@ -253,9 +253,9 @@ function initGame() {
 
 function updateTurnText() {
     if (isPlayerATurn) {
-        playersTurnText.innerHTML = "<h4>Player 1 is going!</h4>"
+        playersTurnText.innerHTML = "<h2>Player 1's turn!</h2>"
     } else {
-        playersTurnText.innerHTML = "<h4>Player 2 is going!</h4>"
+        playersTurnText.innerHTML = "<h2>Player 2's turn!</h2>"
     }
 }
 
