@@ -13,18 +13,25 @@ body {
     font-size: 2rem;
 }
 
-h1, h3 {
+h1, h2 {
     font-weight: 400;
     color: aliceblue;
-    background-color: rgba(172,84,84,.7);
-    font-size: 1.1rem;
+    font-size: 2.5rem;
 }
 
-h2 {
+h3 {
     font-weight: 400;
     color: aliceblue;
-    background-color: rgba(172,84,84,.7);
+    font-size: 1.2rem;
+}
+
+#rules {
+    text-align: center;
     font-size: 2rem;
+}
+
+#pink-box {
+    background-color: rgba(172,84,84,.7);
 }
 
 button {
