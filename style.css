@@ -23,6 +23,10 @@ button {
     font-family: fantasy;
 }
 
+button:hover {
+    background-color: rgba(172,84,84,1)
+}
+
 #board {
     display: flex;
     width: 700px;

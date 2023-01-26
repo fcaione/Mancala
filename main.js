@@ -97,7 +97,7 @@ function findMirrorCell(cell) {
         } else {
             switch(cell.id) {
                 case "7":
-                return "5"
+                    return "5"
                 case "8":
                     return "4"
                 case "9":
