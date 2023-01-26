@@ -7,7 +7,7 @@ const arrayOfStores = document.querySelectorAll(".store")
 const playersTurnText = document.getElementById("player-turn")
 const restartButton = document.getElementById("restart-btn")
 const pockets = Array.from(arrayOfPockets)
-let isPlayerATurn = true
+let isPlayerATurn = false
 let gameOver = false
 
 //---------------------------->Functions<-------------------
@@ -56,11 +56,11 @@ function moveMarbles(targetCell) {
     targetCell.dataset.value = currentValue;
     targetCell.innerText = currentValue;
 
-    let capturableCell = findMirrorCell(lastPlaced)
+    let capturableCellId = findMirrorCell(lastPlaced)
 
     //only if a capturable cell is returned from findMirrorCell
-    if (document.getElementById(capturableCell)) {
-        captureMarbles(capturableCell, lastPlaced);
+    if (document.getElementById(capturableCellId)) {
+        captureMarbles(capturableCellId, lastPlaced);
     }
 
     checkWin(); // has to be before update turn
@@ -76,8 +76,13 @@ function updateTurn(cell) {
     } else {
         isPlayerATurn = !isPlayerATurn
     }
+
+    if (isPlayerATurn) {
+        playersTurnText.innerHTML = "<h2>Player 1's turn!</h2>"
+    } else {
+        playersTurnText.innerHTML = "<h2>Player 2's turn!</h2>"
+    }
     toggleClassClickable();
-    updateTurnText();
 }
 
 function toggleClassClickable() {
@@ -173,8 +178,6 @@ function captureMarbles(capturedCellId, currentCell) {
 
 //checkWin iterate over array of pockets checking if empty if all empty gameOver=true
 function checkWin() {
-    const pockets = Array.from(arrayOfPockets)
-
     const playerAPockets = pockets.filter(elem => {
         return elem.dataset.player === "a"
     })
@@ -191,9 +194,6 @@ function checkWin() {
 
     //if player a or b turn and all elements data value === 0 game=over
     if (isAEmpty || isBEmpty) {
-        console.log(isAEmpty + "a")
-        console.log(isBEmpty + "b")
-        console.log("one is empty")
         gameOver = true
         const bStore = document.getElementById("13")
         const aStore = document.getElementById("6")
@@ -237,6 +237,10 @@ function endGame() {
     } else {
         playersTurnText.innerHTML = "<h2>It's a tie!</h2>"
     }
+
+    pockets.forEach(elem => {
+        elem.classList.remove("clickable")
+    })
 }
 
 //handle click function
@@ -267,17 +271,9 @@ function initGame() {
         element.innerText = "0"
     })
     updateImageClasses();
-    updateTurnText();
-    toggleClassClickable();
+    updateTurn();
 }
 
-function updateTurnText() {
-    if (isPlayerATurn) {
-        playersTurnText.innerHTML = "<h2>Player 1's turn!</h2>"
-    } else {
-        playersTurnText.innerHTML = "<h2>Player 2's turn!</h2>"
-    }
-}
 
 function updateImageClasses() {
     arrayOfCells.forEach(elem => {
