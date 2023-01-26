@@ -5,6 +5,7 @@ const gameBoard = document.getElementById("board")
 const arrayOfPockets = document.querySelectorAll(".pocket")
 const arrayOfStores = document.querySelectorAll(".store")
 const playersTurnText = document.getElementById("player-turn")
+const restartButton = document.getElementById("restart-btn")
 let isPlayerATurn = false
 let gameOver = false
 //---------------------------->Functions<-------------------
@@ -297,6 +298,10 @@ function addImageClasses() {
 arrayOfCells.forEach(elem => {
     elem.addEventListener("click", handleClick)
 })
+
+restartButton.addEventListener("click", initGame)
+
+console.log(restartButton)
 
 //---------------------------->INITGAMEFUNCTION<--------------------
 
