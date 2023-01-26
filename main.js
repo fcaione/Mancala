@@ -6,8 +6,16 @@ const arrayOfPockets = document.querySelectorAll(".pocket")
 const arrayOfStores = document.querySelectorAll(".store")
 const playersTurnText = document.getElementById("player-turn")
 const restartButton = document.getElementById("restart-btn")
+const pockets = Array.from(arrayOfPockets)
+const playerAPockets = pockets.filter(elem => {
+    return elem.dataset.player === "a"
+})
+const playerBPockets = pockets.filter(elem => {
+    return elem.dataset.player === "b"
+})
 let isPlayerATurn = true
 let gameOver = false
+
 //---------------------------->Functions<-------------------
 
 //set value = 0 and iterate over array, decrementing value by 1 while current != 0
@@ -73,9 +81,26 @@ function updateTurn(cell) {
     } else {
         isPlayerATurn = !isPlayerATurn
     }
-
-    
+    toggleClassClickable();
     updateTurnText();
+}
+
+function toggleClassClickable() {
+    if (isPlayerATurn) {
+        playerAPockets.forEach(elem => {
+            elem.classList.toggle("clickable")
+        })
+        playerBPockets.forEach(elem => {
+            elem.classList.remove("clickable")
+        })
+    } else {
+        playerBPockets.forEach(elem => {
+            elem.classList.toggle("clickable")
+        })
+        playerAPockets.forEach(elem => {
+            elem.classList.remove("clickable")
+        })
+    }
 }
 
 //if data value of last placed = 1, capture pieces on other side
@@ -146,23 +171,12 @@ function captureMarbles(capturedCellId, currentCell) {
 
 //checkWin iterate over array of pockets checking if empty if all empty gameOver=true
 function checkWin() {
-    const pockets = Array.from(arrayOfPockets)
-
     gameOver = pockets.every(element => {
         return element.dataset.value === "0"
     })
 
-    //create new array of pockets player A and test whether they're all empty
-    const playerAPockets = pockets.filter(elem => {
-        return elem.dataset.player === "a"
-    })
     let isAEmpty = playerAPockets.every(elem => {
         return elem.dataset.value === "0"
-    })
-
-    //create new array of pockets player B and test whether they're empty
-    const playerBPockets = pockets.filter(elem => {
-        return elem.dataset.player === "b"
     })
     let isBEmpty = playerBPockets.every(elem => {
         return elem.dataset.value === "0"
@@ -244,6 +258,7 @@ function initGame() {
     arrayOfPockets.forEach(element => {
         element.dataset.value = 4
         element.innerText = "4"
+        element.classList.remove("clickable")
     })
 
     arrayOfStores.forEach(element => {
@@ -252,6 +267,7 @@ function initGame() {
     })
     addImageClasses();
     updateTurnText();
+    toggleClassClickable();
 }
 
 function updateTurnText() {
@@ -302,8 +318,6 @@ arrayOfCells.forEach(elem => {
 })
 
 restartButton.addEventListener("click", initGame)
-
-console.log(restartButton)
 
 //---------------------------->INITGAMEFUNCTION<--------------------
 
