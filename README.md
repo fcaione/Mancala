@@ -23,7 +23,7 @@
 
 ***
 
-## Try it out: [Mancala](cozy-mancala.surge.sh)
+## Try it out: [Mancala](https://cozy-mancala.surge.sh/)
 
 ***
 
