@@ -23,6 +23,10 @@
 
 ***
 
+## Try it out: [Mancala](cozy-mancala.surge.sh)
+
+***
+
 ## ***Screenshots***
 ### Landing Page
 ![Landing Page](./images/landingpage.png)
