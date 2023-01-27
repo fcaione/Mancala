@@ -17,6 +17,7 @@ h1, h2 {
     font-weight: 400;
     color: aliceblue;
     font-size: 2.5rem;
+    background-color: rgba(172,84,84,1);
 }
 
 h3 {
@@ -28,6 +29,7 @@ h3 {
 #rules {
     text-align: center;
     font-size: 2rem;
+    text-decoration: underline;
 }
 
 #pink-box {
@@ -52,9 +54,10 @@ button:hover {
     display: flex;
     width: 700px;
     height: 250px;
-    margin: 50px;
+    margin-bottom: 50px;
     background-color: #aa5500;
     border-radius: 50px;
+    
 }
 
 .section1 {
@@ -88,6 +91,17 @@ button:hover {
     border-radius: 50px;
     background-color: #EEB46D;
     margin: 25px;
+}
+
+#store-text {
+    display: flex;
+    width: 750px;
+    justify-content: space-between;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+.store-text {
+    background-color: rgba(172,84,84,1);
 }
 
 #playerb {
